@@ -2,8 +2,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from groq import Groq
 import os
+from fastapi.middleware.cors import CORSMiddleware   # 👈 ADD THIS
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # allow Angular frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
